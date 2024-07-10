@@ -22,6 +22,10 @@ const store = new sessionStore({
 //   await db.sync();
 // })();
 
+app.get("/", (req, res) => {
+  res.json({ msg: "Hello World from backend" });
+});
+
 app.use(
   session({
     secret: process.env.SESS_SECRET,
