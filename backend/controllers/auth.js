@@ -1,7 +1,7 @@
 import User from "../models/user.js";
 import argon2 from "argon2";
 
-// Controller Login
+// CONTROLLER LOGIN UNTUK MASUK KE AKUN YANG SUDAH DI REGISTER
 export const Login = async (req, res) => {
   const user = await User.findOne({
     where: {
@@ -19,7 +19,7 @@ export const Login = async (req, res) => {
   res.status(200).json({ uuid, name, email, role });
 };
 
-// Controller account after login
+// CONTROLLER AKUN SETELAH LOGIN MENGETAHUI DATA AKUN YANG TELAH LOGIN
 export const Me = async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ msg: "Mohon login ke akun anda!" });
@@ -34,7 +34,7 @@ export const Me = async (req, res) => {
   res.status(200).json(user);
 };
 
-// Controller Logout account
+// CONTROLLER LOGOUT AKUN SETELAH LOGIN
 export const logOut = (req, res) => {
   req.session.destroy((err) => {
     if (err) return res.status(400).json({ msg: "Tidak dapat logout" });

@@ -3,6 +3,8 @@ import Job from "../models/job.js";
 import User from "../models/user.js";
 import { Op } from "sequelize";
 
+// CONTROLLER APPLYCANT
+// VARIABLE GET DATA LOWONGAN POSTING SECARA MENYELURUH
 export const getJobs = async (req, res) => {
   try {
     let response;
@@ -33,6 +35,7 @@ export const getJobs = async (req, res) => {
   }
 };
 
+// VARIABLE GET DATA LOWONGAN POSTING DENGAN TYPE ID MENGGUNAKAN UUID MENAMBAHKAN DI ENDPOIN
 export const getJobsById = async (req, res) => {
   try {
     const job = await Job.findOne({

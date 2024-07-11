@@ -18,6 +18,7 @@ const store = new sessionStore({
   db: db,
 });
 
+// // Sinkronisasi database
 // (async () => {
 //   await db.sync();
 // })();

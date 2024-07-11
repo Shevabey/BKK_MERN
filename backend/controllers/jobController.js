@@ -2,12 +2,15 @@ import Job from "../models/job.js";
 import User from "../models/user.js";
 import { Op } from "sequelize";
 
+// CONTROLLER PEMOSTING LOWONGAN PEKERJAAN HANYA DAPAT DI AKSES ROLE ADMIN DAN COMPANY
+// VARIABLE GET DATA LOWONGAN YANG TELAH DIPOSTING
 export const getJobs = async (req, res) => {
   try {
     let response;
     if (req.role === "admin") {
       response = await Job.findAll({
         attributes: [
+          // MENAMPILKAN DATA GET BERDASARKAN ATRIBUT YANG DITAMPILKAN DITAK LAGI BERDASARKAN MODEL
           "uuid",
           "title",
           "description",
@@ -15,6 +18,7 @@ export const getJobs = async (req, res) => {
           "contactInfo",
         ],
         include: [
+          // MENAMPILKAN DATA YANG MEMBUAT POSTINGAN LOWONGAN
           {
             model: User,
             attributes: ["name", "email"],
@@ -24,6 +28,7 @@ export const getJobs = async (req, res) => {
     } else {
       response = await Job.findAll({
         attributes: [
+          // MENAMPILKAN DATA GET BERDASARKAN ATRIBUT YANG DITAMPILKAN TIDAK LAGI BERDASARKAN MODEL
           "uuid",
           "title",
           "description",
@@ -34,6 +39,7 @@ export const getJobs = async (req, res) => {
           userId: req.userId,
         },
         include: [
+          // MENAMPILKAN DATA YANG MEMBUAT POSTINGAN LOWONGAN
           {
             model: User,
             attributes: ["name", "email"],
@@ -47,6 +53,7 @@ export const getJobs = async (req, res) => {
   }
 };
 
+// VARIABLE CREATE DATA LOWONGAN AKAN DIPOSTING
 export const createJobs = async (req, res) => {
   const { title, description, requirements, contactInfo } = req.body;
   try {
@@ -63,6 +70,7 @@ export const createJobs = async (req, res) => {
   }
 };
 
+// VARIABLE GET DATA BY UUID LOWONGAN YANG TELAH DIPOSTING
 export const getJobsById = async (req, res) => {
   try {
     const job = await Job.findOne({
@@ -76,9 +84,11 @@ export const getJobsById = async (req, res) => {
     if (req.role === "admin") {
       response = await Job.findOne({
         where: {
+          // MEMFILTER BERDASARKAN UUID YANG DIMASUKKAN
           id: job.id,
         },
         attributes: [
+          // MENAMPILKAN DATA GET BERDASARKAN ATRIBUT YANG DITAMPILKAN TIDAK LAGI BERDASARKAN MODEL
           "uuid",
           "title",
           "description",
@@ -86,6 +96,7 @@ export const getJobsById = async (req, res) => {
           "contactInfo",
         ],
         include: [
+          // MENAMPILKAN DATA YANG MEMBUAT POSTINGAN LOWONGAN
           {
             model: User,
             attributes: ["name", "email"],
@@ -95,6 +106,7 @@ export const getJobsById = async (req, res) => {
     } else {
       response = await Job.findOne({
         attributes: [
+          // MENAMPILKAN DATA GET BERDASARKAN ATRIBUT YANG DITAMPILKAN TIDAK LAGI BERDASARKAN MODEL
           "uuid",
           "title",
           "description",
@@ -105,6 +117,7 @@ export const getJobsById = async (req, res) => {
           [Op.and]: [{ id: job.id }, { userId: req.userId }],
         },
         include: [
+          // MENAMPILKAN DATA YANG MEMBUAT POSTINGAN LOWONGAN
           {
             model: User,
             attributes: ["name", "email"],
@@ -118,6 +131,8 @@ export const getJobsById = async (req, res) => {
   }
 };
 
+
+// UPDATE DATA JOBS BERDASARKAN UUI YANG DIPILIH UNTUK DI EDIT
 export const updateJobs = async (req, res) => {
   try {
     const job = await Job.findOne({
@@ -136,7 +151,7 @@ export const updateJobs = async (req, res) => {
           },
         }
       );
-    } else {
+    } else { 
       if (req.userId !== job.userId)
         return res.status(403).json({ msg: "Akses terlarang!" });
       await Job.update(
@@ -154,6 +169,7 @@ export const updateJobs = async (req, res) => {
   }
 };
 
+// DELETE JOBS POSTING BERDASARKAN UUI YANG DIPILIH
 export const deleteJobs = async (req, res) => {
   try {
     const job = await Job.findOne({

@@ -1,5 +1,6 @@
+// KONFIGURASI DATABASE DENGAN MYSQL
+
 import { Sequelize } from "sequelize";
-// const { Sequelize } = require("sequelize");
 
 import dotenv from "dotenv";
 
@@ -14,14 +15,5 @@ const db = new Sequelize(
     dialect: "mysql",
   }
 );
-
-// const db = new Sequelize({
-//   username: process.env.DB_USERNAME,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DATABASE,
-//   dialect: "mysql",
-//   port: process.env.APP_PORT,
-//   host: process.env.DB_HOST,
-// });
 
 export default db;
