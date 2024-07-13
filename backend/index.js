@@ -19,9 +19,9 @@ const store = new sessionStore({
 });
 
 // // Sinkronisasi database
-// (async () => {
-//   await db.sync();
-// })();
+(async () => {
+  await db.authenticate();
+})();
 
 app.get("/", (req, res) => {
   res.json({ msg: "Hello World from backend" });

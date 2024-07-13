@@ -90,7 +90,6 @@ export const updateUser = async (req, res) => {
   }
 };
 
-
 // Delete User by id
 export const deleteUser = async (req, res) => {
   const user = await User.findOne({
