@@ -4,7 +4,7 @@ import { verifyUser, applicantOnly } from "../middleware/authUser.js";
 
 const router = express.Router();
 
-router.get("/Applicants", verifyUser, applicantOnly, getJobs);
-router.get("/Applicants/:id", verifyUser, applicantOnly, getJobsById);
+router.get("/vacancy", verifyUser, applicantOnly, getJobs);
+router.get("/vacancy/:id", verifyUser, applicantOnly, getJobsById);
 
 export default router;
