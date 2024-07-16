@@ -20,7 +20,14 @@ const store = new sessionStore({
 
 // // Sinkronisasi database
 (async () => {
-  await db.authenticate();
+  try {
+    await db.authenticate();
+    console.log("Database connected...");
+    await db.sync(); // Sinkronisasi database
+    await store.sync(); // Sinkronisasi session store
+  } catch (error) {
+    console.error("Connection error:", error);
+  }
 })();
 
 app.get("/", (req, res) => {
