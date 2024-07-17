@@ -42,6 +42,7 @@ const Users = db.define(
       allowNull: false,
       validate: {
         notEmpty: true,
+        isIn: [["applicant", "company"]],
       },
     },
   },

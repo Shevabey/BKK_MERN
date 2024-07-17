@@ -1,6 +1,35 @@
 import User from "../models/user.js";
 import argon2 from "argon2";
 
+// Controller untuk registrasi user
+export const register = async (req, res) => {
+  const { name, email, password, confPassword, role } = req.body;
+
+  // Validasi password dan confirmPassword
+  if (password !== confPassword) {
+    return res
+      .status(400)
+      .json({ msg: "Password dan Confirm Password tidak cocok" });
+  }
+
+  // Hash password menggunakan argon2
+  const hashPassword = await argon2.hash(password);
+  try {
+    // Buat user baru
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashPassword,
+      role,
+    });
+
+    res.status(201).json({ msg: "Registrasi berhasil", user: newUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: error.message });
+  }
+};
+
 // CONTROLLER LOGIN UNTUK MASUK KE AKUN YANG SUDAH DI REGISTER
 export const Login = async (req, res) => {
   const user = await User.findOne({
